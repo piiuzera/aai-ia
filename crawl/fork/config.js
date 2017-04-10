@@ -1,7 +1,7 @@
 "use strict";
 
 var defaults = {
-	threads 	: 1
+	threads 	: 10
 };
 
 exports.defaults = defaults;
