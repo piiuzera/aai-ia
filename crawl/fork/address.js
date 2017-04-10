@@ -33,7 +33,7 @@ var set = function(address) {
 	}
 
 	Fs.writeFile(
-		'./files/' + address.zipcode + '.txt',
+		'./files/' + address.zipcode + '.json',
 		JSON.stringify(address),
 		checkSaveFile
 	);
