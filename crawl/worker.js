@@ -72,10 +72,6 @@ var getSearchAddress = function() {
 };
 
 var setSearchAddress = function(body, status) {
-	var $ = Cheerio.load(body);
-
-	console.log($.html());
-
 	if (status !== 200 || !body) {
 		Log.error('SEARCH ZIPCODE HAS ERROR');
 
