@@ -10,12 +10,6 @@ var workers = [];
 var scaleLoop 	= {};
 var scaleLoopMs = 6000;
 
-var disconnect = function(worker) {
-    delete workers[worker.id];
-    
-    Log.info('TOTAL THREADS: ' + Object.keys(workers).length);
-};
-
 var setScale = function() {
     var workersId       = Object.keys(workers);
     var resolution      = Address.getLength() / Config.defaults.threads;
@@ -55,8 +49,6 @@ var init = function() {
         exec: './crawl/worker.js',
         args: ['--use', 'http']
     });
-
-    Cluster.on('disconnect', disconnect);
 
     setScale();
     scaleLoop = setInterval(setScale, scaleLoopMs);
