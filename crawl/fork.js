@@ -7,6 +7,9 @@ var Log 			= require('./fork/log');
 
 var workers = [];
 
+var scaleLoop   = {};
+var scaleLoopMs = 6000;
+
 var setScale = function() {
     var workersId       = Object.keys(workers);
     var resolution      = Address.getLength() / Config.defaults.threads;
@@ -48,6 +51,7 @@ var init = function() {
     });
 
     setScale();
+    scaleLoop = setInterval(setScale, scaleLoopMs);
 };
 
 exports.init = init;
