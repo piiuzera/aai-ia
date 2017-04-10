@@ -1,0 +1,21 @@
+{
+  "name": "chatterbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://piiuzera@bitbucket.org/piiuzera/chatterbot.git"
+  },
+  "author": "Matheus Amaro",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/piiuzera/chatterbot#readme",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "colors": "^1.1.2",
+    "request": "^2.81.0"
+  }
+}
