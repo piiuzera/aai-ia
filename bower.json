@@ -6,7 +6,7 @@
     "Matheus Amaro"
   ],
   "license": "ISC",
-  "homepage": "bot.amarocorp.com.br",
+  "homepage": "dilmabot.amarocorp.com.br",
   "ignore": [
     "**/.*",
     "node_modules",

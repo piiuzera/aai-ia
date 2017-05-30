@@ -8,11 +8,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://piiuzera@bitbucket.org/piiuzera/chatterbot.git"
+    "url": "git+https://github.com/piiuzera/aai-ia.git"
   },
   "author": "Matheus Amaro",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/piiuzera/chatterbot#readme",
+  "homepage": "https://github.com/piiuzera/aai-ia#readme",
   "dependencies": {
     "body-parser": "^1.17.2",
     "cheerio": "^0.22.0",
