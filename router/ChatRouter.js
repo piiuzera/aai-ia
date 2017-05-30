@@ -4,8 +4,6 @@ var ChatApi 	= require('../api/ChatApi');
 var Express 	= require('express');
 var Validator 	= require('validatorjs');
 
-var self = this;
-
 (function() {
 
 	var Router 		= Express.Router();
@@ -29,15 +27,26 @@ var self = this;
 			return;
 		}
 
+		ChatApi.Create(request.body.message);
+
 		Responses.push({
-			hash 		: '',
+			hash 		: 1,
 			response 	: response
 		});
 	});
+
+	var _responseText = function(message) {
+		for (var i = 0; i < Responses.length; ++i) {
+			if (Responses[i].hash === 1) {
+				Responses[i].status(200).json(message);
+			}
+		}
+	};
 
 	var _getRouter = function() {
 		return Router;
 	};
 
-	self.GetRouter = _getRouter;
+	module.exports.ResponseText 	= _responseText;
+	module.exports.GetRouter 		= _getRouter;
 })();

@@ -12,7 +12,7 @@ var Web 		= require('./worker/Web');
 	var startCrawlLoop = {};
 	var startCrawlLoopMs = 1000;
 
-	var HandleMessage = function(message) {
+	var handleMessage = function(message) {
 		if (!message.command) {
 			return;
 		}
@@ -23,7 +23,6 @@ var Web 		= require('./worker/Web');
 			return;
 		}
 	};
-	process.on('message', HandleMessage);
 
 	var StartCrawl = function() {
 		if (!isReady) {
@@ -49,11 +48,11 @@ var Web 		= require('./worker/Web');
 
 	var SetZipcode = function(zipcode) {
 		if(!zipcode) {
-			Log.info('ZIPCODE IS A NOT FOUND');
+			Log.Info('ZIPCODE IS A NOT FOUND');
 			return;
 		}
 
-		Structure.Address 			= Structure.getDefaultAddress();
+		Structure.Address 			= Structure.GetDefaultAddress();
 		Structure.Address.zipcode 	= zipcode;
 	};
 
@@ -64,9 +63,9 @@ var Web 		= require('./worker/Web');
 			'semelhante'	: 'N'
 		};
 
-		Log.info('SEARCH ZIPCODE STARTED');
+		Log.Info('SEARCH ZIPCODE STARTED');
 
-		Web.post(
+		Web.Post(
 			Structure.urlResultSearchZipcode,
 			request,
 			SetSearchAddress
@@ -75,7 +74,7 @@ var Web 		= require('./worker/Web');
 
 	var SetSearchAddress = function(body, status) {
 		if (status !== 200 || !body) {
-			Log.error('SEARCH ZIPCODE HAS ERROR');
+			Log.Error('SEARCH ZIPCODE HAS ERROR');
 
 			GetNext();
 			return;
@@ -84,7 +83,7 @@ var Web 		= require('./worker/Web');
 		var $ = Cheerio.load(body);
 
 		if ($('.ctrlcontent > p').text() === 'DADOS NAO ENCONTRADOS') {
-			Log.error('ZIPCODE HAS INVALID');
+			Log.Error('ZIPCODE HAS INVALID');
 
 			GetNext();
 
@@ -101,9 +100,9 @@ var Web 		= require('./worker/Web');
 		Structure.Address.state		= splitCityState[1];
 		Structure.Address.zipcode 	= $(columns.get(3)).text().trim();
 
-		Log.info(Structure.Address);
+		Log.Info(Structure.Address);
 
-		Log.info('SEARCH ZIPCODE SUCCESS');
+		Log.Info('SEARCH ZIPCODE SUCCESS');
 
 		Save();
 	};
@@ -114,7 +113,7 @@ var Web 		= require('./worker/Web');
 	};
 
 	var Save = function() {
-		Log.info('SAVING ADDRESS');
+		Log.Info('SAVING ADDRESS');
 
 		process.send({
 			command	: 'SetAddress',
@@ -127,6 +126,8 @@ var Web 		= require('./worker/Web');
 	};
 
 	var _init = function() {
+		process.on('message', handleMessage);
+
 		StartCrawl();
 		
 		startCrawlLoop = setInterval(

@@ -1,21 +1,15 @@
 "use strict";
 
-var Address 	= require('./crawl/fork/address');
+var Address 	= require('./crawl/fork/Address');
 var Cluster 	= require('cluster');
-var Fork 		= require('./crawl/fork');
+var ChatRouter	= require('./router/ChatRouter');
+var Fork 		= require('./crawl/Fork');
 
 (function() {
 
-	var handleMessage = function(message) {
+	var handleMessage = function(worker, message) {
 		if (!message.command) {
 			return;
-		}
-
-		var worker = {};
-		for (var id in Cluster.workers) {
-			if (Cluster.workers[id].process.pid === message.pid) {
-				worker = Cluster.workers[id];
-			}
 		}
 
 		if (message.command === 'GetZipcode') {
@@ -27,6 +21,8 @@ var Fork 		= require('./crawl/fork');
 			});
 		} else if (message.command === 'SetAddress') {
 			Address.Enqueue(message.data.address);
+
+			ChatRouter.ResponseText(message.data.message);
 		}
 	};
 
