@@ -1,42 +1,57 @@
 "use strict";
 
-var colors = require('colors');
+var Colors = require('colors');
 
-colors.setTheme({
-    success: 'blue',
-    info: 'gray',
-    error: 'red',
-    worker: 'cyan'
-});
+(function() {
 
-exports.error = function(message) {
-    if (typeof message === 'object') {
-        console.log(colors.worker.underline('[ WORKER: ' + process.pid + ' ]') + colors.error('[ERROR ] ') + JSON.stringify(message));
-        return;
-    }
-    console.log(colors.worker.underline('[ WORKER: ' + process.pid + ' ]') + colors.error('[ERROR ] ') + message);
-};
+    var _error = function(message) {
+        if (typeof message === 'object') {
+            console.log(Colors.success('[ WORKER: ' + process.pid + ' ]') + Colors.error('[ERROR ] '));
+            console.log(message);
+            return;
+        }
+        console.log(Colors.success('[ WORKER: ' + process.pid + ' ]') + Colors.error('[ERROR ] ') + message);
+    };
 
-exports.info = function(message) {
-    if (typeof message === 'object') {
-        console.log(colors.worker.underline('[ WORKER: ' + process.pid + ' ]') + colors.info('[ INFO ] ') + JSON.stringify(message));
-        return;
-    }
+    var _info = function(message) {
+        if (typeof message === 'object') {
+            console.log(Colors.success('[ WORKER: ' + process.pid + ' ]') + Colors.info('[ INFO ] '));
+            console.log(message);
+            return;
+        }
 
-    console.log(colors.worker.underline('[ WORKER: ' + process.pid + ' ]') + colors.info('[ INFO ] ') + message);
-};
+        console.log(Colors.success('[ WORKER: ' + process.pid + ' ]') + Colors.info('[ INFO ] ') + message);
+    };
 
-exports.success = function(message) {
-    if (typeof message === 'object') {
-        console.log(colors.worker.underline('[ WORKER: ' + process.pid + ' ]') + colors.success('[SUCESS] ') + JSON.stringify(message));
-        return;
-    }
+    var _success = function(message) {
+        if (typeof message === 'object') {
+            console.log(Colors.success('[ WORKER: ' + process.pid + ' ]') + Colors.success('[SUCESS] '));
+            console.log(message);
+            return;
+        }
 
-    console.log(colors.worker.underline('[ WORKER: ' + process.pid + ' ]') + colors.success('[SUCESS] ') + message);
-};
+        console.log(Colors.success('[ WORKER: ' + process.pid + ' ]') + Colors.success('[SUCESS] ') + message);
+    };
 
-exports.clearLine = function() {
-    console.log(' ');
-    console.log(colors.magenta('----------------------------------'));
-    console.log(' ');
-};
+    var _clearLine = function(message) {
+        console.log(' ');
+        console.log(Colors.magenta('----------------------------------'));
+        console.log(' ');
+    };
+
+    var _init = function() {
+        Colors.setTheme({
+            success : 'green',
+            info    : 'gray',
+            error   : 'red'
+        });
+    };
+
+    module.exports.Error        = _error;
+    module.exports.Info         = _info;
+    module.exports.Success      = _success;
+    module.exports.ClearLine    = _clearLine;
+    module.exports.Init         = _init;
+})();
+
+this.Init();

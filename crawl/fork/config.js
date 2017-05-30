@@ -1,7 +1,11 @@
 "use strict";
 
-var defaults = {
-	threads 	: 10
-};
+(function() {
 
-exports.defaults = defaults;
+	var defaults = {
+		threads 	: 10
+	};
+
+	module.exports.defaults = defaults;
+
+})();

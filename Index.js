@@ -4,35 +4,38 @@ var Address 	= require('./crawl/fork/address');
 var Cluster 	= require('cluster');
 var Fork 		= require('./crawl/fork');
 
-var handleMessage = function(message) {
-	if (!message.command) {
-		return;
-	}
+(function() {
 
-	var worker = {};
-	for (var id in Cluster.workers) {
-		if (Cluster.workers[id].process.pid === message.pid) {
-			worker = Cluster.workers[id];
+	var handleMessage = function(message) {
+		if (!message.command) {
+			return;
 		}
-	}
 
-	if (message.command === 'getZipcode') {
-		worker.send({
-			command: 'setZipcode',
-			data: {
-				zipcode: Address.get()
+		var worker = {};
+		for (var id in Cluster.workers) {
+			if (Cluster.workers[id].process.pid === message.pid) {
+				worker = Cluster.workers[id];
 			}
-		});
-	} else if (message.command === 'setAddress') {
-		Address.set(message.data.address);
-	}
-};
+		}
 
-var Init = function() {
-	Cluster.on('message', handleMessage);
+		if (message.command === 'GetZipcode') {
+			worker.send({
+				command: 'SetZipcode',
+				data: {
+					zipcode: Address.Dequeue()
+				}
+			});
+		} else if (message.command === 'SetAddress') {
+			Address.Enqueue(message.data.address);
+		}
+	};
 
-	Address.init();
-	Fork.init();
-};
+	var _init = function() {
+		Cluster.on('message', handleMessage);
 
-Init();
+		Fork.Init();
+	};
+
+	module.exports.Init = _init;
+
+})();

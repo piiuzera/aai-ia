@@ -1,17 +1,21 @@
 "use strict";
 
-var zeroComplete = function(str, length) {
-	if (str.length > length) {
-		return str;
-	}
+(function() {
 
-	var zeroCount = '';
+	var _zeroComplete = function(str, length) {
+		if (str.length > length) {
+			return str;
+		}
 
-	for (var i = 0; i < (length - str.length); ++i) {
-		zeroCount += '0';
-	}
+		var zeroCount = '';
 
-	return zeroCount + str;
-};
+		for (var i = 0; i < (length - str.length); ++i) {
+			zeroCount += '0';
+		}
 
-exports.zeroComplete = zeroComplete;
+		return zeroCount + str;
+	};
+
+	module.exports.ZeroComplete = _zeroComplete;
+
+})();

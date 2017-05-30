@@ -1,57 +1,64 @@
 "use strict";
 
-var Address 		= require('./fork/address');
-var Config 			= require('./fork/config');
+var Address 		= require('./fork/Address');
+var Config 			= require('./fork/Config');
 var Cluster 		= require('cluster');
-var Log 			= require('./fork/log');
+var Log 			= require('./fork/Log');
 
-var workers = [];
+(function() {
 
-var scaleLoop   = {};
-var scaleLoopMs = 6000;
+    var workers = [];
 
-var setScale = function() {
-    var workersId       = Object.keys(workers);
-    var resolution      = Address.getLength() / Config.defaults.threads;
-    var newThreads      = 0;
+    var scaleLoop   = {};
+    var scaleLoopMs = 5000;
 
-    Log.info('ZIPCODES     : ' + Address.getLength() 		+ '\r\n');
-    Log.info('THREADS      : ' + Config.defaults.threads 	+ '\r\n');
-    Log.info('RESOLUTION   : ' + resolution 				+ '\r\n');
-    Log.info('RUNNING      : ' + workersId.length 			+ '\r\n');
+    var SetScale = function() {
+        var workersId       = Object.keys(workers);
+        var resolution      = Address.Length() / Config.defaults.threads;
+        var newThreads      = 0;
 
-    if (Config.defaults.threads > workersId.length) {
-        newThreads = Config.defaults.threads - workersId.length;
+        Log.Info('ZIPCODES     : ' + Address.Length()           + '\r\n');
+        Log.Info('THREADS      : ' + Config.defaults.threads    + '\r\n');
+        Log.Info('RESOLUTION   : ' + resolution                 + '\r\n');
+        Log.Info('RUNNING      : ' + workersId.length           + '\r\n');
 
-        if (resolution < 1) {
-            newThreads = Address.getLength() - workersId.length;
+        if (Config.defaults.threads > workersId.length) {
+            newThreads = Config.defaults.threads - workersId.length;
+
+            if (resolution < 1) {
+                newThreads = Address.Length() - workersId.length;
+            }
+
+            StartWorkers(newThreads);
+            return;
+        }
+    };
+
+    var StartWorkers = function(quantity) {
+        Log.Info('START WORKERS');
+
+        for (var i = 0; i < quantity; i++) {
+            var worker = Cluster.fork();
+
+            workers[worker.id] = worker;
         }
 
-        startWorkers(newThreads);
-        return;
-    }
-};
+        Log.Info('TOTAL THREADS: [' + Object.keys(workers).length + ']');
+    };
 
-var startWorkers = function(quantity) {
-    Log.info('START WORKERS');
+    var _init = function() {
+        Cluster.setupMaster({
+            exec: './crawl/Worker.js',
+            args: ['--use', 'http']
+        });
 
-    for (var i = 0; i < quantity; i++) {
-        var worker = Cluster.fork();
+        SetScale();
+        scaleLoop = setInterval(
+            SetScale,
+            scaleLoopMs
+        );
+    };
 
-        workers[worker.id] = worker;
-    }
+    module.exports.Init = _init;
 
-    Log.info('TOTAL THREADS: [' + Object.keys(workers).length + ']');
-};
-
-var init = function() {
-    Cluster.setupMaster({
-        exec: './crawl/worker.js',
-        args: ['--use', 'http']
-    });
-
-    setScale();
-    scaleLoop = setInterval(setScale, scaleLoopMs);
-};
-
-exports.init = init;
+})();

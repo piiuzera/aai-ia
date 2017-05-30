@@ -1,10 +1,12 @@
 "use strict";
 
 var BodyParser      = require('body-parser');
+var ChatRouter 		= require('./router/ChatRouter');
 var CookieParser    = require('cookie-parser');
 var Cors            = require('cors');
 var EJS             = require('ejs');
 var Express         = require('express');
+var Index 			= require('./Index');
 var Path            = require('path');
 
 var self = this;
@@ -24,8 +26,12 @@ var self = this;
 		App.use(Cors());
 		App.use(Express.static(Path.join(__dirname, 'public_html')));
 
+		App.use('/api/message', ChatRouter.GetRouter());
+
 		App.listen(5004, function() {
 			console.log("Server has Started: http://localhost:5004");
+			
+			Index.Init();
 		});
 	};
 

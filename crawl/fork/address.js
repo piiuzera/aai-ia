@@ -2,48 +2,27 @@
 
 var Log		= require('./log');
 
-var addresses = [];
+(function() {
+	var addresses 	= [];
+	var zipcodes 	= [];
 
-var zipcodes = [];
+	var _dequeue = function() {
+		return zipcodes.shift();
+	};
 
-var get = function() {
-	return zipcodes.shift();
-};
+	var _enqueue = function(zipcode) {
+		if (!zipcode) {
+			return;
+		}
 
-var set = function(address) {
-	if (!address || !address.street || !address.district || !address.city) {
-		return;
-	}
+		zipcodes.push(zipcode);
+	};
 
-	Fs.writeFile(
-		'./files/' + address.zipcode + '.json',
-		JSON.stringify(address),
-		checkSaveFile
-	);
+	var _length = function() {
+		return zipcodes.length;
+	};
 
-	addresses.push(address);
-};
-
-var checkSaveFile = function(error) {
-	if (error) {
-		Log.error('ERROR SAVE FILE');
-
-		return;
-	}
-
-	Log.info('ADDRESS SAVED SUCCESS');
-};
-
-var getLength = function() {
-	return zipcodes.length;
-};
-
-var init = function() {
-	getZipcode();
-};
-
-exports.getZipcode 			= getZipcode;
-exports.get 				= get;
-exports.set 				= set;
-exports.getLength 			= getLength;
-exports.init				= init;
+	module.exports.Dequeue 	= _dequeue;
+	module.exports.Enqueue 	= _enqueue;
+	module.exports.Length 	= _length;
+})();
