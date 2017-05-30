@@ -1,0 +1,36 @@
+<div ng-init="Init()">
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-2"></div>
+			<div class="col-md-8">
+				<div class="panel panel-primary chat">
+					<div class="panel panel-heading">
+						Me diga um endereço ai, vai..
+					</div>
+					<div class="panel panel-body chat-body">
+						<div ng-class="{'alert alert-warning' : message.hash, 'alert alert-info text-right' : !message.hash}" role="alert" ng-repeat="message in messages">
+							<div class="row">
+								<div class="col-md-11">
+									<p>{{ message.text }}</p>
+									<small>
+										<i ng-show="message.hash" ng-class="{'glyphicon glyphicon-time' : !message.isSend, 'glyphicon glyphicon-ok' : message.isSend}"></i>
+										<span title="Data/Hora de Envio">{{ message.date | date:'dd/MM - HH:mm' }}</span>
+									</small>
+								</div>
+								<div class="col-md-1">
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-footer">
+						<textarea class="form-control" ng-model="message" rows="3" ng-enter="SendMessage()"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2"></div>
+		</div>		
+	</div>
+
+</div>

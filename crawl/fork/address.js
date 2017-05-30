@@ -1,27 +1,10 @@
 "use strict";
 
-var Fs		= require('fs');
 var Log		= require('./log');
 
 var addresses = [];
 
 var zipcodes = [];
-
-var getZipcode = function() {
-	Fs.readFile(
-		'./crawl/fork/zipcode.json',
-		setZipcode
-	);
-};
-
-var setZipcode = function(error, data) {
-	if (error) {
-		console.log(error);
-		return;
-	}
-
-	zipcodes = data ? JSON.parse(data.toString('utf-8')) : [];
-};
 
 var get = function() {
 	return zipcodes.shift();

@@ -1,38 +1,36 @@
 "use strict";
 
-var Address 	= require('./crawl/fork/address');
-var Cluster 	= require('cluster');
-var Fork 		= require('./crawl/fork');
+var BodyParser      = require('body-parser');
+var CookieParser    = require('cookie-parser');
+var Cors            = require('cors');
+var EJS             = require('ejs');
+var Express         = require('express');
+var Path            = require('path');
 
-var handleMessage = function(message) {
-	if (!message.command) {
-		return;
-	}
+var self = this;
 
-	var worker = {};
-	for (var id in Cluster.workers) {
-		if (Cluster.workers[id].process.pid === message.pid) {
-			worker = Cluster.workers[id];
-		}
-	}
+(function() {
 
-	if (message.command === 'getZipcode') {
-		worker.send({
-			command: 'setZipcode',
-			data: {
-				zipcode: Address.get()
-			}
+	var _init = function() {
+		var App = Express();
+
+		App.engine('html', EJS.renderFile);
+
+		App.use(BodyParser.urlencoded({
+			extended: true
+		}));
+		App.use(BodyParser.json());
+		App.use(CookieParser());
+		App.use(Cors());
+		App.use(Express.static(Path.join(__dirname, 'public_html')));
+
+		App.listen(5004, function() {
+			console.log("Server has Started: http://localhost:5004");
 		});
-	} else if (message.command === 'setAddress') {
-		Address.set(message.data.address);
-	}
-};
+	};
 
-var Init = function() {
-	Cluster.on('message', handleMessage);
+	self.Init = _init;
 
-	Address.init();
-	Fork.init();
-};
+})();
 
-Init();
+self.Init();
