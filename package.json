@@ -16,13 +16,10 @@
     "cors": "^2.8.3",
     "ejs": "^2.5.6",
     "express": "^4.15.3",
-<<<<<<< Updated upstream
     "request": "^2.79.0",
-=======
     "htmlencode": "0.0.4",
     "jsonfile": "^3.0.0",
     "request": "^2.81.0",
->>>>>>> Stashed changes
     "validatorjs": "^3.13.3"
   }
 }
