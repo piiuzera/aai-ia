@@ -6,7 +6,10 @@
 			<div class="col-md-8">
 				<div class="panel panel-primary chat">
 					<div class="panel panel-heading">
-						Me diga um endereço ai, vai..
+						<button class="btn btn-default" data-toggle="modal" data-target="#help">
+							<i class="glyphicon glyphicon-info-sign"></i>
+							Ajuda
+						</button>
 					</div>
 					<div class="panel panel-body chat-body" ngScrollBottom>
 						<div ng-class="{'alert alert-warning' : !message.robot, 'alert alert-info text-right' : message.robot}" role="alert" ng-repeat="message in messages">
@@ -31,6 +34,32 @@
 			</div>
 			<div class="col-md-2"></div>
 		</div>		
+	</div>
+
+	<div class="modal fade" id="help" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Ajuda</h4>
+				</div>
+				<div class="modal-body">
+					<h4>Consultar Endereço</h4>
+					<p>Coloque o Endereço entre parênteses ( $ENDERECO ), Exemplo: (Rua São Borja, Belo Horizonte)</p>
+
+					<h4>Consultar Endereço</h4>
+					<p>Coloque o Cep entre parênteses ( $CEP ), Exemplo: (31070010)</p>
+
+					<h4>Não Localizado</h4>
+					<p>As perguntas não localizadas, são salvas no banco de dados e será analisada no futuro.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+				</div>
+			</div>
+		</div>
 	</div>
 
 </div>
