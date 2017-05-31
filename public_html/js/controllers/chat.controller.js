@@ -17,7 +17,9 @@ angular.module('App')
 			};
 
 			delete $scope.message;
-			$scope.messages.unshift(message);
+			$scope.messages.push(message);
+
+			$('.chat-body').animate({ scrollTop: 999999999999 });
 
 			Chat.Send(message).then(
 				CheckSendMessage.bind(this, message),
@@ -34,18 +36,12 @@ angular.module('App')
 				message : data.message
 			};
 
-			$scope.messages.unshift(responseMessage);
+			$scope.messages.push(responseMessage);
+
+			$('.chat-body').animate({ scrollTop: 999999999999 });
 
 			message.isSend = true;
 		}
-
-		var _getMessages = function() {
-
-		};
-
-		var SetMessages = function(response) {
-
-		};
 
 		var _init = function() {
 			var message = {
@@ -54,7 +50,7 @@ angular.module('App')
 				message: 'Olá, meu nome é Dilma. Me diz um endereço ai...',
 			};
 
-			$scope.messages.unshift(message);
+			$scope.messages.push(message);
 		};
 
 		$scope.SendMessage 	= _sendMessage;
