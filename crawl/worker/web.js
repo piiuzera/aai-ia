@@ -5,6 +5,7 @@ var RequestConnection = require('request');
 (function() {
 
     var Request = RequestConnection.defaults({
+        jar       : true,
         timeout   : 60000,
         encoding  : 'binary',
         gzip      : true,
@@ -32,18 +33,18 @@ var RequestConnection = require('request');
 
 
     var _get = function(url, callback, _retryCount) {
-        var options = {
+        var getOptions = {
             url: url
         };
 
         Request.get(
-            options,
+            getOptions,
             requestCallback.bind(null, url, callback, _retryCount)
         );
     };
 
     var _post = function(url, form, callback, headers, _retryCount) {
-        var options = {
+        var postOptions = {
             'url': url,
             'form': form,
             'headers' : {
@@ -52,12 +53,11 @@ var RequestConnection = require('request');
         };
 
         Request.post(
-            options,
+            postOptions,
             requestCallback.bind(null, url, callback, _retryCount)
         );
     };
 
     module.exports.Get  = _get;
     module.exports.Post = _post;
-
 })();

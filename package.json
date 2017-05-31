@@ -1,27 +1,28 @@
 {
-  "name": "chatterbot",
+  "name": "aai-ia",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Atividade Autoinstrucional - Inteligência Artificial",
+  "main": "node Server.js",
   "scripts": {
-    "test": "node server.js"
+    "test": "node Server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/piiuzera/aai-ia.git"
-  },
-  "author": "Matheus Amaro",
+  "author": "Matheus Amaro (matheus.amaro@gmail.com)",
   "license": "ISC",
-  "homepage": "https://github.com/piiuzera/aai-ia#readme",
   "dependencies": {
     "body-parser": "^1.17.2",
-    "cheerio": "^0.22.0",
+    "cheerio": "^1.0.0-rc.1",
     "colors": "^1.1.2",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.3",
     "ejs": "^2.5.6",
     "express": "^4.15.3",
+<<<<<<< Updated upstream
     "request": "^2.79.0",
+=======
+    "htmlencode": "0.0.4",
+    "jsonfile": "^3.0.0",
+    "request": "^2.81.0",
+>>>>>>> Stashed changes
     "validatorjs": "^3.13.3"
   }
 }

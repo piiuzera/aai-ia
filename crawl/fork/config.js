@@ -2,10 +2,13 @@
 
 (function() {
 
-	var defaults = {
-		threads 	: 10
+	var _getDefaults = function() {
+		var defaults = {
+			threads 	: 10
+		};
+
+		return defaults;
 	};
 
-	module.exports.defaults = defaults;
-
+	module.exports.GetDefaults = _getDefaults;
 })();

@@ -1,0 +1,23 @@
+[{
+	"messages" 	: ["OLÁ", "OLA", "OI", "EI", "HEY", "HI", "HELLO", "E AI", "EAI", "I AI", "IAI", "OPA", "BAO", "BÃO"],
+	"response" 	: "Olá.."
+},
+{
+	"messages" 	: ["TUDO", "COMO", "ESTÁ", "ESTA", "BEM?", "OTIMO?", "TRANQUILO?", "SUAVE?", "EXCELENTE?", "EXCELÊNTE?"],
+	"response" 	: "Tudo Bem e contigo ?"
+},
+{
+	"messages" 	: ["PRESIDENTE", "BRASIL", "DENOVO"],
+	"response"	: "Claro, eu ainda tenho planos de estocar o vento, saldar a mandioca e ainda por cima, tornar válida a mulher ser uma mulher sapiens!"
+},
+{
+	"messages" 	: ["DILM", "DIL", "DILMA"],
+	"response"	: "Diga.."
+},
+{
+	"messages" 	: ["PIRANHA", "VADIA", "PUTA", "SAFADA"],
+	"response"	: "Mas eu sei estocar vento.."
+},
+{
+	"response" 	: "Desculpe, Eu me engasguei comigo mesma. Repita por gentileza ?"
+}]

@@ -9,8 +9,6 @@ var Express         = require('express');
 var Index 			= require('./Index');
 var Path            = require('path');
 
-var self = this;
-
 (function() {
 
 	var _init = function() {
@@ -29,14 +27,13 @@ var self = this;
 		App.use('/api/message', ChatRouter.GetRouter());
 
 		App.listen(5004, function() {
-			console.log("Server has Started: http://localhost:5004");
-			
+			console.log("Server has Started: http://localhost:5004\n\r");
 			Index.Init();
 		});
 	};
 
-	self.Init = _init;
+	module.exports.Init = _init;
 
 })();
 
-self.Init();
+this.Init();

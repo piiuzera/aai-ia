@@ -2,6 +2,7 @@
 
 var ChatApi 	= require('../api/ChatApi');
 var Express 	= require('express');
+var Robot 		= require('../Robot');
 var Validator 	= require('validatorjs');
 
 (function() {
@@ -12,8 +13,7 @@ var Validator 	= require('validatorjs');
 
 	Router.post('/send', function(request, response) {
 		var validation = new Validator(request.body, {
-			message		: 'required',
-			hash 		: 'required'
+			message		: 'required'
 		});
 
 		if (validation.fails()) {
@@ -27,18 +27,33 @@ var Validator 	= require('validatorjs');
 			return;
 		}
 
-		ChatApi.Create(request.body.message);
+		var hash = Math.random().toString(36).slice(2);
 
-		Responses.push({
-			hash 		: 1,
-			response 	: response
+		ChatApi.Create(request.body.message, hash, function(send) {
+			if (!send.crawl) {
+				response.status(200).json({
+					res 	: true,
+					date 	: new Date(),
+					message : send.message,
+				});
+
+				return;
+			}
+
+			Responses.push({
+				hash 		: hash,
+				response 	: response
+			});
 		});
 	});
 
-	var _responseText = function(message) {
+	var _responseText = function(message, hash) {
 		for (var i = 0; i < Responses.length; ++i) {
-			if (Responses[i].hash === 1) {
-				Responses[i].status(200).json(message);
+			if (Responses[i] && Responses[i].hash === hash) {
+				var send = Robot.GetResponseAddressCommunication(message);
+				
+				Responses[i].response.status(200).json(send);
+				delete Responses[i];
 			}
 		}
 	};

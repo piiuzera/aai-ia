@@ -1,6 +1,6 @@
 angular.module('App')
-	.controller('ChatController', ['$scope',
-		function($scope) {
+	.controller('ChatController', ['$scope', 'Chat',
+		function($scope, Chat) {
 
 		$scope.messages = [];
 
@@ -10,23 +10,32 @@ angular.module('App')
 			}
 
 			var message = {
-				hash: Math.random().toString(36).slice(2),
-				date: new Date(),
-				text: $scope.message,
-				isSend: false
+				date 	: new Date(),
+				message	: $scope.message,
+				robot 	: false,
+				isSend 	: false
 			};
 
-			$scope.messages.push(message);
-
-			setTimeout(
-				CheckSendMessage.bind(this, message),
-				3000
-			);
-
 			delete $scope.message;
+			$scope.messages.unshift(message);
+
+			Chat.Send(message).then(
+				CheckSendMessage.bind(this, message),
+				CheckSendMessage.bind(this, message)
+			);
 		};
 
 		var CheckSendMessage = function(message, response) {
+			var data = response.data;
+
+			var responseMessage = {
+				date 	: data.date,
+				robot	: true,
+				message : data.message
+			};
+
+			$scope.messages.unshift(responseMessage);
+
 			message.isSend = true;
 		}
 
@@ -41,10 +50,11 @@ angular.module('App')
 		var _init = function() {
 			var message = {
 				date: new Date(),
-				text: 'Olá, meu nome é Dilma. Me diz um endereço ai...',
+				robot	: true,
+				message: 'Olá, meu nome é Dilma. Me diz um endereço ai...',
 			};
 
-			$scope.messages.push(message);
+			$scope.messages.unshift(message);
 		};
 
 		$scope.SendMessage 	= _sendMessage;

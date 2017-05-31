@@ -1,8 +1,8 @@
 "use strict";
 
 var Address 	= require('./crawl/fork/Address');
+var ChatRouter 	= require('./router/ChatRouter');
 var Cluster 	= require('cluster');
-var ChatRouter	= require('./router/ChatRouter');
 var Fork 		= require('./crawl/Fork');
 
 (function() {
@@ -12,17 +12,18 @@ var Fork 		= require('./crawl/Fork');
 			return;
 		}
 
-		if (message.command === 'GetZipcode') {
+		if (message.command === 'GetCrawl') {
 			worker.send({
-				command: 'SetZipcode',
+				command: 'SetCrawl',
 				data: {
-					zipcode: Address.Dequeue()
+					crawl: Address.Dequeue()
 				}
 			});
-		} else if (message.command === 'SetAddress') {
-			Address.Enqueue(message.data.address);
-
-			ChatRouter.ResponseText(message.data.message);
+		} else if (message.command === 'SendAddress') {
+			ChatRouter.ResponseText(
+				message.data.address || message.data.addresses,
+				message.data.hash
+			);
 		}
 	};
 

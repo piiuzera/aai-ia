@@ -39,19 +39,14 @@ var Colors = require('colors');
         console.log(' ');
     };
 
-    var _init = function() {
-        Colors.setTheme({
-            success : 'green',
-            info    : 'gray',
-            error   : 'red'
-        });
-    };
-
     module.exports.Error        = _error;
     module.exports.Info         = _info;
     module.exports.Success      = _success;
     module.exports.ClearLine    = _clearLine;
-    module.exports.Init         = _init;
 })();
 
-this.Init();
+Colors.setTheme({
+    success	: 'green',
+    info 	: 'gray',
+    error 	: 'red'
+});

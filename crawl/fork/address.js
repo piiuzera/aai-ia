@@ -1,10 +1,10 @@
 "use strict";
 
-var Log		= require('./log');
+var Log		= require('./Log');
 
 (function() {
-	var addresses 	= [];
-	var zipcodes 	= [];
+
+	var zipcodes = [];
 
 	var _dequeue = function() {
 		return zipcodes.shift();
@@ -23,6 +23,7 @@ var Log		= require('./log');
 	};
 
 	module.exports.Dequeue 	= _dequeue;
-	module.exports.Enqueue 	= _enqueue;
+	module.exports.Enqueue	= _enqueue;
 	module.exports.Length 	= _length;
+
 })();

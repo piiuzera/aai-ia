@@ -1,23 +1,26 @@
 "use strict";
 
-var Util 	= require('../crawl/fork/Util');
 var Address = require('../crawl/fork/Address');
+var Robot 	= require('../Robot');
 
 (function() {
 
-	var _create = function(message) {
-		var splitMessage = message.split(' ');
-		for (var index = 0; index < splitMessage.length; ++index) {
-			var objMessage = Util.NumberOnly(splitMessage[index]);
+	var _create = function(message, hash, callback) {
+		Robot.SendMessage(
+			message,
+			CheckCreate.bind(this, hash, callback)
+		);
+	};
 
-			if (objMessage.length === 8) {
-				Address.Enqueue(objMessage);
-			}
+	var CheckCreate = function(hash, callback, send) {
+		if (send && send.crawl) {
+			send.hash 		= hash;
+			send.message 	= escape(send.message)
+			Address.Enqueue(send);
 		}
 
-		return null;
+		callback(send);
 	};
 
 	module.exports.Create = _create;
-
 })();

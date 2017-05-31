@@ -1,4 +1,4 @@
-angular.module('App', ['ngRoute']);
+angular.module('App', ['ngRoute', 'ngSanitize']);
 
 angular.module('App').config(['$locationProvider', function($locationProvider) {
 	$locationProvider.hashPrefix('');
